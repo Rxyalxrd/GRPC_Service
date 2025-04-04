@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+service Status 
+{
+    /*
+    Сервис предназначен для проверки работоспособности приложения.
+    */
+
+    rpc Healthz (HealthzRequest) returns (HealthzResponse);
+}
+
+message HealthzRequest
+{
+
+}
+
+message HealthzResponse 
+{
+    uint32 status = 1;
+}
