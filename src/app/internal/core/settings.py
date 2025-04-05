@@ -10,11 +10,11 @@ class AppSettings(BaseSettings):
 
     Attributes
     ----------
-    app_title : Literal
+    app_title : str
         Название приложения.
-    app_description : Literal
+    app_description : str
         Описание приложения.
-    secret : Literal
+    secret : str
         FastAPI ключ.
  
     """
@@ -30,7 +30,7 @@ class GRPCServerSettings(BaseSettings):
 
     Attributes
     ----------
-    grpc_url : Literal
+    grpc_url : str
         Подключение grpc сервера.
 
     """
@@ -38,9 +38,24 @@ class GRPCServerSettings(BaseSettings):
     grpc_url: str
 
 
+class PostgreSQLSettings(BaseSettings):
+    """
+    Настройки подключения к базе данных.
+
+    Attributes
+    ----------
+    database_url : str
+        Подключение к базе данных.
+
+    """
+
+    database_url: str
+
+
 class Settings(
     AppSettings,
     GRPCServerSettings,
+    PostgreSQLSettings,
 ):
     """
     Главный класс настроек.
