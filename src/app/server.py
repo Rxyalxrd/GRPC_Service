@@ -1,5 +1,4 @@
-import time
-from concurrent import futures
+import asyncio
 
 import grpc
 from fastapi import status
@@ -15,24 +14,39 @@ from internal.core import settings
 class Status(healthz_pb2_grpc.StatusServicer):
     def Healthz(self, request, context):
 
-        logger.info("Получен запрос")
+        logger.debug("Получен запрос")
 
         return healthz_pb2.HealthzResponse(status=status.HTTP_200_OK)
 
 
-def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+async def serve() -> None:
+    server = grpc.aio.server()
     healthz_pb2_grpc.add_StatusServicer_to_server(Status(), server)
     server.add_insecure_port(settings.grpc_url)
-    server.start()
-
-    logger.debug("Запуск grpc сервера ...")
 
     try:
-        while True:
-            time.sleep(86400)
+        await server.start()
+        logger.debug("gRPC сервер запущен ...")
+        await server.wait_for_termination()
+
+    except asyncio.CancelledError:
+        logger.warning("gRPC сервер остановлен (CancelledError)")
+        await server.stop(0)
+        raise
+
     except KeyboardInterrupt:
-        server.stop(0)
+        logger.warning("Остановка gRPC сервера пользователем")
+        await server.stop(0)
+
+    except Exception:
+        logger.error("Непредвиденная ошибка", exc_info=True)
+        await server.stop(0)
+
+    finally:
+        logger.debug("gRPC сервер корректно завершён.")
 
 if __name__ == '__main__':
-    serve()
+    try:
+        asyncio.run(serve())
+    except KeyboardInterrupt:
+        logger.warning("Принудительная остановка gRPC сервера")
