@@ -3,6 +3,7 @@ from concurrent import futures
 
 import grpc
 from fastapi import status
+from loguru import logger
 
 from internal.generated import (
     healthz_pb2,
@@ -13,7 +14,9 @@ from internal.core import settings
 
 class Status(healthz_pb2_grpc.StatusServicer):
     def Healthz(self, request, context):
-        print("Получен запрос")
+
+        logger.info("Получен запрос")
+
         return healthz_pb2.HealthzResponse(status=status.HTTP_200_OK)
 
 
@@ -22,7 +25,9 @@ def serve():
     healthz_pb2_grpc.add_StatusServicer_to_server(Status(), server)
     server.add_insecure_port(settings.grpc_url)
     server.start()
-    print('gRPC server running')
+
+    logger.debug("Запуск grpc сервера ...")
+
     try:
         while True:
             time.sleep(86400)

@@ -7,7 +7,6 @@ from app.internal.api.enpoints import (
 
 main_router = APIRouter()
 
-
 main_router.include_router(
     router=healthz_router,
     prefix="/status",
