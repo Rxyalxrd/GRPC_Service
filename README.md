@@ -20,8 +20,8 @@
 1. Клонируйте репозиторий:
 
     ```bash
-    git clone https://github.com/yourusername/grpc_test.git
-    cd grpc_test
+    git@github.com:Rxyalxrd/GRPC_Service.git
+    cd GRPC_Service
     
     ```
 
