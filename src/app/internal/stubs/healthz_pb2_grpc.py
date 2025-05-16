@@ -37,7 +37,7 @@ class StatusStub(object):
             channel: A grpc.Channel.
         """
         self.Healthz = channel.unary_unary(
-                '/Status/Healthz',
+                '/healthz.Status/Healthz',
                 request_serializer=healthz__pb2.HealthzRequest.SerializeToString,
                 response_deserializer=healthz__pb2.HealthzResponse.FromString,
                 _registered_method=True)
@@ -64,9 +64,9 @@ def add_StatusServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'Status', rpc_method_handlers)
+            'healthz.Status', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('Status', rpc_method_handlers)
+    server.add_registered_method_handlers('healthz.Status', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -89,7 +89,7 @@ class Status(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/Status/Healthz',
+            '/healthz.Status/Healthz',
             healthz__pb2.HealthzRequest.SerializeToString,
             healthz__pb2.HealthzResponse.FromString,
             options,

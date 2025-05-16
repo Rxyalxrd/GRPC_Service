@@ -3,7 +3,7 @@ APP = app
 MAIN = main
 
 GRPC_SERVER = app/server.py
-OUT = ./app/internal/generated
+OUT = ./app/internal/stubs
 INPUT = ../protos
 PROTOS = $(INPUT)/*.proto
 
@@ -13,6 +13,9 @@ PROTOS = $(INPUT)/*.proto
 	gen-grpc,
 	grpc-server,
 	run
+
+install:
+	poetry install --no-root
 
 clean:
 	@echo "Cleaning up Python directories..."

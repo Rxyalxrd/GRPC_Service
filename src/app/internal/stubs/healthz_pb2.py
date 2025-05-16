@@ -24,17 +24,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rhealthz.proto\"\x10\n\x0eHealthzRequest\"!\n\x0fHealthzResponse\x12\x0e\n\x06status\x18\x01 \x01(\r26\n\x06Status\x12,\n\x07Healthz\x12\x0f.HealthzRequest\x1a\x10.HealthzResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rhealthz.proto\x12\x07healthz\"\x10\n\x0eHealthzRequest\"!\n\x0fHealthzResponse\x12\x0e\n\x06status\x18\x01 \x01(\r2F\n\x06Status\x12<\n\x07Healthz\x12\x17.healthz.HealthzRequest\x1a\x18.healthz.HealthzResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'healthz_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_HEALTHZREQUEST']._serialized_start=17
-  _globals['_HEALTHZREQUEST']._serialized_end=33
-  _globals['_HEALTHZRESPONSE']._serialized_start=35
-  _globals['_HEALTHZRESPONSE']._serialized_end=68
-  _globals['_STATUS']._serialized_start=70
-  _globals['_STATUS']._serialized_end=124
+  _globals['_HEALTHZREQUEST']._serialized_start=26
+  _globals['_HEALTHZREQUEST']._serialized_end=42
+  _globals['_HEALTHZRESPONSE']._serialized_start=44
+  _globals['_HEALTHZRESPONSE']._serialized_end=77
+  _globals['_STATUS']._serialized_start=79
+  _globals['_STATUS']._serialized_end=149
 # @@protoc_insertion_point(module_scope)

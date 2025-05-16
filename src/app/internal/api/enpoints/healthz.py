@@ -5,7 +5,7 @@ from fastapi import (
 )
 from fastapi.responses import JSONResponse
 
-from app.internal.generated import (
+from app.internal.stubs import (
     healthz_pb2_grpc,
     healthz_pb2,
 )
