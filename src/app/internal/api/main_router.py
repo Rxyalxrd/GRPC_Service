@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.internal.api.enpoints import (
+from app.internal.api.v1 import (
     healthz_router,
     user_router,
 )

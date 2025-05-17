@@ -1,6 +1,7 @@
 import grpc
 from fastapi import (
     APIRouter,
+    Depends,
     status,
 )
 from fastapi.responses import JSONResponse
@@ -10,22 +11,19 @@ from app.internal.stubs import (
     healthz_pb2,
 )
 from app.internal.core import settings
-
+from app.internal.models import User
+from app.internal.auth import get_current_user
 
 router = APIRouter()
 
 
 @router.get("/healthz")
-async def check_status() -> JSONResponse:
+async def check_status(user: User = Depends(get_current_user)) -> JSONResponse:
     """
     Проверка состояния сервиса.
 
     Этот маршрут используется для проверки доступности и состояния сервиса. Возвращает
     статус `200 OK` и сообщение с текущим состоянием.
-
-    Parametrs
-    ---------
-    None
 
     Returns
     -------
@@ -39,10 +37,10 @@ async def check_status() -> JSONResponse:
 
     """
 
-    with grpc.insecure_channel(settings.grpc_url) as channel:
+    async with grpc.aio.insecure_channel(settings.grpc_url) as channel:
 
         stub = healthz_pb2_grpc.StatusStub(channel)
-        response = stub.Healthz(healthz_pb2.HealthzRequest())
+        response = await stub.Healthz(healthz_pb2.HealthzRequest())
         
         return JSONResponse(
             content={"status": response.status},

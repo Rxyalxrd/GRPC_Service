@@ -14,8 +14,15 @@ class gRPCSettings(BaseSettings):
 
     Attributes
     ----------
-    grpc_url : str
-        URL для подключения к gRPC серверу.
+    grpc_host : str
+        Хост для подключения к gRPC серверу.
+    grpc_port : int
+        Порт для подключения к gRPC серверу.
+
+    Methods
+    -------
+    grpc_url()
+        Составляет полный url для подключения к gRPC серверу.
 
     """
 

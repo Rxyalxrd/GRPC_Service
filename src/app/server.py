@@ -21,7 +21,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class Status(healthz_pb2_grpc.StatusServicer):
-    def Healthz(self, request, context):
+    async def Healthz(self, request, context):
 
         return healthz_pb2.HealthzResponse(status=status.HTTP_200_OK)
 
