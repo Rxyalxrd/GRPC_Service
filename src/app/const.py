@@ -1,2 +1,0 @@
-NAME_SHEMA_MIN_LEN: int = 5
-URL_SHEMA_MIN_LEN: int = 10

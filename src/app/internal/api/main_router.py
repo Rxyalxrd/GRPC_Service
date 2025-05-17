@@ -15,6 +15,6 @@ main_router.include_router(
 )
 main_router.include_router(
     router=user_router,
-    prefix="/v1",
+    prefix="/auth/jwt",
     tags=["Auth"],
 )

@@ -19,39 +19,46 @@ router = APIRouter()
 async def login(credentials: UserCreate) -> JWTToken:
     try:
 
+        # Проверяем существование пользователя
+            # if existing:
+            #     (status.ALREADY_EXISTS, "Пользователь уже существует")
+
         async with grpc.aio.insecure_channel(settings.grpc_url) as channel:
 
             stub = user_pb2_grpc.AuthServiceStub(channel)
 
-            grpc_response = await stub.Login(user_pb2.LoginRequest(credentials.model_dump()))
+            response = await stub.Login(user_pb2.LoginRequest(**credentials.model_dump()))
             
             return JWTToken(
-                access_token=grpc_response.access_token,
-                token_type=grpc_response.token_type,
+                access_token=response.access_token,
+                token_type=response.token_type,
             )
+
     except grpc.aio.AioRpcError as e:
-        if e.code() == status.HTTP_401_UNAUTHORIZED:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Неверный email или пароль"
-            )
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Ошибка при обращении к gRPC сервису"
-        )
-    
+            if e.code() == grpc.StatusCode.NOT_FOUND:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=e.details())
+            elif e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=e.details())
+            else:
+                raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal Server Error")
+
 @router.post(
     "/register",
     summary="",
-    response_model=JWTToken
+    response_model=JWTToken,
 )
-async def register_user(user: UserCreate) -> JWTToken:
+async def register(user: UserCreate) -> JWTToken:
+
+
+    # Проверяем существование пользователя
+        # if existing:
+        #     (status.ALREADY_EXISTS, "Пользователь уже существует")
 
     async with grpc.aio.insecure_channel(settings.grpc_url) as channel:
 
         stub = user_pb2_grpc.AuthServiceStub(channel)
 
-        response = await stub.Register(user_pb2.RegisterRequest(user.model_dump()))
+        response = await stub.Register(user_pb2.RegisterRequest(**user.model_dump()))
 
         return JWTToken(
             access_token=response.access_token,

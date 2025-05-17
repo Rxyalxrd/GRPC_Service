@@ -6,7 +6,7 @@ GRPC_SERVER = app/server.py
 OUT = ./app/internal/stubs
 INPUT = ../protos
 PROTOS = $(INPUT)/*.proto
-
+MSG = ""
 
 .PHONY: 
 	clean, 
@@ -34,3 +34,12 @@ run:
 
 grpc-server:
 	poetry run $(PYTHON) $(GRPC_SERVER)
+
+migrate:
+	poetry run alembic upgrade head
+
+downgrade:
+	poetry run alembic downgrade -1
+
+makemigration:
+	poetry run alembic revision --autogenerate -m "$(MSG)"
