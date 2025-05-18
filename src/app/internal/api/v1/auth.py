@@ -65,7 +65,6 @@ async def register(user: UserCreate) -> JWTToken:
                 token_type=response.token_type
             )
     except grpc.aio.AioRpcError as e:
-        # Пример: проверяем конкретный код ошибки, чтобы вернуть понятное HTTP исключение
         if e.code() == status.HTTP_409_CONFLICT:
             logger.warning(f"Пользователь уже существует: {e.details()}")
             raise HTTPException(status_code=409, detail="Пользователь уже существует")

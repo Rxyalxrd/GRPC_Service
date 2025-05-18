@@ -11,14 +11,14 @@ from app.internal.stubs import (
     healthz_pb2,
 )
 from app.internal.core import settings
-from app.internal.models import User
+from app.internal.models import Librarian
 from app.internal.auth import get_current_user
 
 router = APIRouter()
 
 
 @router.get("/healthz")
-async def check_status(user: User = Depends(get_current_user)) -> JSONResponse:
+async def check_status(user: Librarian = Depends(get_current_user)) -> JSONResponse:
     """
     Проверка состояния сервиса.
 

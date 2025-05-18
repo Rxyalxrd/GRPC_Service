@@ -5,7 +5,7 @@ from fastapi import FastAPI
 
 from app.internal.api import main_router
 from app.internal.core import settings
-from app.server import serve
+from app.internal.core import serve
 
 
 @asynccontextmanager
