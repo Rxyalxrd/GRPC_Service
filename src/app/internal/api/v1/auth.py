@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
 from loguru import logger
 
-from app.internal.schemas import UserCreate, JWTToken
+from app.internal.schemas import LibrarianCreate, JWTToken
 from app.internal.stubs import (
     user_pb2_grpc,
     user_pb2,
@@ -47,7 +47,7 @@ async def login_oauth2(form_data: OAuth2PasswordRequestForm = Depends()) -> JWTT
     summary="",
     response_model=JWTToken,
 )
-async def register(user: UserCreate) -> JWTToken:
+async def register(user: LibrarianCreate) -> JWTToken:
 
 
     # Проверяем существование пользователя

@@ -9,11 +9,12 @@ service Status
   */
 
   rpc Healthz (HealthzRequest) returns (HealthzResponse);
+
 }
 
-message HealthzRequest
-{
-
+message HealthzRequest 
+{ 
+  
 }
 
 message HealthzResponse 

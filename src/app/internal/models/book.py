@@ -5,7 +5,7 @@ from app.const import DEFAULT_QUANTITY
 
 
 class Book(Base):
-    name: Mapped[str]
+    title: Mapped[str]
     author: Mapped[str]
     pub_date: Mapped[int | None]
     isbn: Mapped[str | None] = mapped_column(unique=True)
