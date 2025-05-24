@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package library;
+
+service ReaderService 
+{
+  rpc Create (CreateReaderRequest) returns (ReaderResponse);
+  rpc Get (GetReaderRequest) returns (ReaderResponse);
+  rpc Update (UpdateReaderRequest) returns (ReaderResponse);
+  rpc Delete (DeleteReaderRequest) returns (Empty);
+  rpc List (Empty) returns (ListReadersResponse);
+}
+
+message Reader 
+{
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message CreateReaderRequest 
+{
+  Reader reader = 1;
+}
+
+message GetReaderRequest 
+{
+  int32 id = 1;
+}
+
+message UpdateReaderRequest 
+{
+  Reader reader = 1;
+}
+
+message DeleteReaderRequest 
+{
+  int32 id = 1;
+}
+
+message ReaderResponse 
+{
+  Reader reader = 1;
+}
+
+message ListReadersResponse 
+{
+  repeated Reader readers = 1;
+}
+
+message Empty {}

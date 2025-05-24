@@ -17,7 +17,11 @@ from app.internal.auth import get_current_user
 router = APIRouter()
 
 
-@router.get("/healthz")
+@router.get(
+    "/healthz",
+    summary="",
+    description="",
+)
 async def check_status(user: Librarian = Depends(get_current_user)) -> JSONResponse:
     """
     Проверка состояния сервиса.

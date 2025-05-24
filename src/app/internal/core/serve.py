@@ -6,7 +6,7 @@ from app.internal.stubs import (
     healthz_pb2_grpc,
     user_pb2_grpc,
 )
-from app.internal.core import settings
+from .settings import settings
 from app.internal.servicer import Status, AuthService
 
 
